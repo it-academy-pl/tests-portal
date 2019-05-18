@@ -6,7 +6,7 @@ import pl.itacademy.testsportal.model.Student;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
+
 public class StudentInMemoryDao implements StudentDao {
 
     private static List<Student> students = new ArrayList<>();

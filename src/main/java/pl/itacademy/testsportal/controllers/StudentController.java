@@ -1,5 +1,7 @@
 package pl.itacademy.testsportal.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,8 +14,9 @@ import java.util.List;
 @Controller
 public class StudentController {
 
-    private StudentService studentService;
+    private static Logger logger = LoggerFactory.getLogger(StudentController.class);
 
+    private StudentService studentService;
 
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
@@ -21,6 +24,7 @@ public class StudentController {
 
     @RequestMapping(path="/students", method = RequestMethod.GET)
     public ModelAndView allStudents() {
+        logger.debug("getting all students");
         List<Student> students = studentService.getAllStudents();
         return new ModelAndView("/students.html", "students", students);
     }

@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    pl.itacademy: DEBUG
+  file: logs/logs.txt
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://remotemysql.com:3306/l9CKVZoljX
+    username: l9CKVZoljX
+    password: r9B2AXe45z
+
+h2:
+  console:
+    enabled: true
