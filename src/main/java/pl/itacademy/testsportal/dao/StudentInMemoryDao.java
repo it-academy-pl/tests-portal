@@ -1,12 +1,14 @@
 package pl.itacademy.testsportal.dao;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import pl.itacademy.testsportal.model.Student;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Repository
+@Profile("dev")
 public class StudentInMemoryDao implements StudentDao {
 
     private static List<Student> students = new ArrayList<>();
