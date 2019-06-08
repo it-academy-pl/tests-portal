@@ -1,0 +1,1 @@
+INSERT INTO STUDENT (id, email, name, surname, password) values (100, 'email', 'name', 'dsf', 'password');
