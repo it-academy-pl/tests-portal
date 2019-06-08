@@ -17,6 +17,10 @@ public class StudentHibernateDao implements StudentDao {
 
     @Override
     public List<Student> getAllStudents() {
-        return null;
+//        return em.createQuery("Select s from STUDENT s ").getResultList();
+        return em.createNamedQuery("Student.findAll").getResultList();
+    }
+    public Student getByEmail() {
+        return (Student)em.createNamedQuery("Student.findByMail");
     }
 }

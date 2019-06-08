@@ -1,16 +1,15 @@
 package pl.itacademy.testsportal.model;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name = "Student")
-@Table(name = "STUDENT")
-public class Student {
+@NamedQueries({
+        @NamedQuery(name = "Student.findAll", query = "Select s from STUDENT s"),
+        @NamedQuery(name = "Student.findByMail", query = "Select s from STUDENT s where s.email =:email")
+})
 
+@Entity(name = "STUDENT")
+@Table(name = "STUDENT") // tak widoczna będzie w bazie danych
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
