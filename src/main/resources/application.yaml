@@ -6,7 +6,6 @@ logging:
   level:
     root: INFO
     pl.itacademy: DEBUG
-  file: logs/logs.txt
 
 spring:
   profiles:
