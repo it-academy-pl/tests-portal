@@ -1,7 +1,6 @@
 server:
   port: 8080
 
-
 logging:
   level:
     root: INFO
@@ -9,4 +8,4 @@ logging:
 
 spring:
   profiles:
-    active: h2hibernate
+    active: dev
