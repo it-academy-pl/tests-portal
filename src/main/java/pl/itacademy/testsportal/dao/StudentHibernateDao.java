@@ -23,4 +23,9 @@ public class StudentHibernateDao implements StudentDao {
     public Student getByEmail() {
         return (Student)em.createNamedQuery("Student.findByMail");
     }
+
+    @Override
+    public void addStudent(Student student) {
+        em.persist(student);
+    }
 }
