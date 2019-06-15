@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import pl.itacademy.testsportal.model.Student;
 import pl.itacademy.testsportal.service.StudentService;
+import pl.itacademy.testsportal.validate.StudentValidator;
 
 import javax.persistence.GeneratedValue;
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +48,11 @@ public class StudentController {
     }
 
     @PostMapping("/student")
-    public String studentSubmit(@ModelAttribute Student student) {
+    public String studentSubmit(@ModelAttribute Student student, BindingResult bindingResult) {
+        new StudentValidator().validate(student, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "studentForm";
+        }
         studentService.addStudent(student);
         return "result";
     }

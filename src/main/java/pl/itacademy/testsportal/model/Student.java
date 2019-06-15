@@ -8,7 +8,7 @@ import java.util.Date;
 })
 
 @Entity(name = "STUDENT")
-@Table(name = "STUDENT") // tak widoczna będzie w bazie danych
+@Table(name = "STUDENT")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,6 +17,8 @@ public class Student {
     private String surname;
     private String email;
     private String password;
+    @Transient
+    private String repeatPassword;
     private Date lastLogin;
 
     public Student() {
@@ -59,6 +61,14 @@ public class Student {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRepeatPassword() {
+        return repeatPassword;
+    }
+
+    public void setRepeatPassword(String repeatPassword) {
+        this.repeatPassword = repeatPassword;
     }
 
 }
