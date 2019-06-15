@@ -8,7 +8,7 @@ import java.util.Date;
 })
 
 @Entity(name = "STUDENT")
-@Table(name = "STUDENT") // tak widoczna będzie w bazie danych
+@Table(name = "STUDENT")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
