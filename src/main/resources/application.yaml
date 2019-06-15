@@ -9,4 +9,4 @@ logging:
 
 spring:
   profiles:
-    active: h2hibernate
+    active: springdata
