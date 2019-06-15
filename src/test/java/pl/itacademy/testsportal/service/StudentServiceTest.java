@@ -33,5 +33,11 @@ public class StudentServiceTest {
     public void testExample() {
         studentService.addStudent(new Student("name", "surname", "email", "password"));
         assertThat(studentService.getAllStudents().size()).isEqualTo(4);
+
+    }
+
+    @Test
+    public void testGetStudentByName() {
+        assertThat(studentService.getByName("Staszek").get().getEmail()).isEqualTo("rubel@coin.ru");
     }
 }
