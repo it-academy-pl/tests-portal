@@ -21,53 +21,31 @@ import static pl.itacademy.testsportal.model.IndexHeaders.*;
 public class ReadExcelService {
 
 
+    public List<Student> readStudents() throws Exception {
+        Path path = Paths.get(FILENAME);
+        List<Student> listOfStudents = new ArrayList<>();
 
-
-        public List<Student> readStudents() throws Exception {
-            Path path = Paths.get(FILENAME);
-            List<Student> listOfStudents = new ArrayList<>();
-
-            if (!Files.exists(path)) {
-                throw new Exception("No file");
-            }
-
-            InputStream inp = new FileInputStream(FILENAME);
-            Workbook workbook = WorkbookFactory.create(inp);
-            Sheet sheet = workbook.getSheet("User");
-
-            for (int rowNum = 1; rowNum < sheet.getLastRowNum() + 1; rowNum++) {
-                Row row = sheet.getRow(rowNum);
-                Student student = new Student();
-
-                student.setIndexNumber((long)row.getCell(INDEX_NUMBER.ordinal()).getNumericCellValue());
-                student.setName(row.getCell(NAME.ordinal()).getStringCellValue());
-                student.setSurname(row.getCell(SURNAME.ordinal()).getStringCellValue());
-
-                listOfStudents.add(student);
-            }
-
-
-            return listOfStudents;
+        if (!Files.exists(path)) {
+            throw new Exception("No file");
         }
 
-    public static void main(String[] args) throws Exception {
+        InputStream inp = new FileInputStream(FILENAME);
+        Workbook workbook = WorkbookFactory.create(inp);
+        Sheet sheet = workbook.getSheet("User");
 
-            /*
-            Student student1 = new Student("Rafal", "Szczotka", null, null, 1234);
-            Student student2 = new Student("Marian", "Kowalski", null, null, 5678);
+        for (int rowNum = 1; rowNum < sheet.getLastRowNum() + 1; rowNum++) {
+            Row row = sheet.getRow(rowNum);
+            Student student = new Student();
 
-            WriteScheduleService writeScheduleService = new WriteScheduleService();
-            writeScheduleService.generateSchedule(student1);
+            student.setIndexNumber((long) row.getCell(INDEX_NUMBER.ordinal()).getNumericCellValue());
+            student.setName(row.getCell(NAME.ordinal()).getStringCellValue());
+            student.setSurname(row.getCell(SURNAME.ordinal()).getStringCellValue());
 
-            */
-            ReadExcelService readExcelService = new ReadExcelService();
+            listOfStudents.add(student);
+        }
 
-            List<Student> studentList = readExcelService.readStudents();
 
-            for (Student student : studentList) {
-                System.out.println(student.getIndexNumber() + student.getName() + student.getSurname());
-
-            }
-
+        return listOfStudents;
     }
+        
 }
