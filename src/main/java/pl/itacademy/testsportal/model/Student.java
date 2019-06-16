@@ -13,6 +13,7 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    private long indexNumber;
     private String name;
     private String surname;
     private String email;
@@ -24,11 +25,20 @@ public class Student {
     public Student() {
     }
 
-    public Student(String name, String surname, String email, String password) {
+    public Student(String name, String surname, String email, String password, long indexNumber) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.password = password;
+        this.indexNumber = indexNumber;
+    }
+
+    public long getIndexNumber() {
+        return indexNumber;
+    }
+
+    public void setIndexNumber(long indexNumber) {
+        this.indexNumber = indexNumber;
     }
 
     public String getName() {
