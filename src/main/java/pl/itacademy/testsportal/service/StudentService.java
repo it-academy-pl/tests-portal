@@ -26,5 +26,7 @@ public class StudentService {
         studentDao.save(student);
     }
 
-
+    public Student getByName(String name) {
+        return studentDao.findByName(name);
+    }
 }

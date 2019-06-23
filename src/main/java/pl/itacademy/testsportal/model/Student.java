@@ -18,6 +18,11 @@ public class Student {
     private String email;
     private String password;
     private Date lastLogin;
+    @Transient
+    private String repeatPassword;
+
+
+
 
     public Student() {
     }
@@ -31,6 +36,13 @@ public class Student {
 
     public String getName() {
         return name;
+    }
+    public String getRepeatPassword() {
+        return repeatPassword;
+    }
+
+    public void setRepeatPassword(String repeatPassword) {
+        this.repeatPassword = repeatPassword;
     }
 
     public void setName(String name) {
