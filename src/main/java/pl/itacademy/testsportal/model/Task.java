@@ -1,6 +1,8 @@
 package pl.itacademy.testsportal.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity{name="TABLE"}
 @Table{name="TABLE"}
@@ -11,6 +13,11 @@ public class Task {
     private String description;
     private int difficulty;
     private Subject subject;
+
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "PARAMETER")
+    @JoinColumn(name = "parameterId")
+    private List<Parameter> parameters;
 
     public Task(String description, int difficulty) {
         this.description = description;
