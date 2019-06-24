@@ -26,8 +26,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     // Enable jdbc authentication
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().usersByUsernameQuery("select email, password, true from STUDENT where email=?")
-                .authoritiesByUsernameQuery("select email, 'ROLE_USER' from STUDENT where email=?")
+        auth.jdbcAuthentication()
+                .usersByUsernameQuery("select email, password, true from USERS where email=?")
+                .authoritiesByUsernameQuery("select email, 'ROLE_USER' from USERS where email=?")
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder());
     }
