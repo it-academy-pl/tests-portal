@@ -1,11 +1,15 @@
 package pl.itacademy.testsportal.model;
+import org.springframework.stereotype.Repository;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @NamedQueries({
         @NamedQuery(name = "Student.findAll", query = "Select s from STUDENT s"),
         @NamedQuery(name = "Student.findByMail", query = "Select s from STUDENT s where s.email =:email")
 })
+
 
 @Entity(name = "STUDENT")
 @Table(name = "STUDENT") // tak widoczna będzie w bazie danych
@@ -21,8 +25,8 @@ public class Student {
     @Transient
     private String repeatPassword;
 
-
-
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "student")
+    private List<Task> tasks;
 
     public Student() {
     }
@@ -73,4 +77,11 @@ public class Student {
         this.password = password;
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
 }

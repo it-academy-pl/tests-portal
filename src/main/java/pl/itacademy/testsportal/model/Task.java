@@ -4,24 +4,31 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity{name="TABLE"}
-@Table{name="TABLE"}
+@Entity(name="TASK")
+@Table(name="TASK")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String description;
+    private String subject;
     private int difficulty;
-    private Subject subject;
+
+    @Transient
+    private String studentName;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Student student;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "PARAMETER")
-    @JoinColumn(name = "parameterId")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "task")
     private List<Parameter> parameters;
 
-    public Task(String description, int difficulty) {
+    public Task(String description,  String subject, int difficulty, Student student) {
         this.description = description;
         this.difficulty = difficulty;
+        this.subject = subject;
+        this.student = student;
     }
 
     public Task() {
@@ -45,5 +52,29 @@ public class Task {
 
     public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 }

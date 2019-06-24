@@ -12,7 +12,7 @@ public class Parameter {
     private Double value;
     private String unit;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "taskId")
     private Task task;
 
