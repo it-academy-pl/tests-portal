@@ -48,8 +48,7 @@ public class StudentController {
     }
 
     @PostMapping("/student")
-    public String studentSubmit(@ModelAttribute Student student, BindingResult bindingResult) {
-        new StudentValidator().validate(student, bindingResult);
+    public String studentSubmit(@ModelAttribute @Valid Student student, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "studentForm";
         }

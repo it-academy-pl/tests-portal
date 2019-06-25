@@ -1,18 +1,17 @@
 package pl.itacademy.testsportal.model;
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
-@NamedQueries({
-        @NamedQuery(name = "Student.findAll", query = "Select s from STUDENT s"),
-        @NamedQuery(name = "Student.findByMail", query = "Select s from STUDENT s where s.email =:email")
-})
-
-@Entity(name = "STUDENT")
+@Entity(name = "Student")
 @Table(name = "STUDENT")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Size(min = 2, message = "Imię jest za Krótkie")
+    @Size(max = 10, message = "Imię jest za długie")
     private String name;
     private String surname;
     private String email;
