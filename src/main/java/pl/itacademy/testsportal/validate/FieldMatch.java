@@ -32,16 +32,4 @@ public @interface FieldMatch
      */
     String second();
 
-    /**
-     * Defines several <code>@FieldMatch</code> annotations on the same element
-     *
-     * @see FieldMatch
-     */
-    @Target({TYPE, ANNOTATION_TYPE})
-    @Retention(RUNTIME)
-    @Documented
-    @interface List
-    {
-        FieldMatch[] value();
-    }
 }

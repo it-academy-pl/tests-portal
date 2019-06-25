@@ -2,6 +2,7 @@ package pl.itacademy.testsportal.model;
 import pl.itacademy.testsportal.validate.FieldMatch;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -14,10 +15,12 @@ public class Student {
     private long id;
 
     @Size(min = 2, message = "Imię jest za krótkie")
-    @Size(max = 10, message = "Imię jest za długie")
+    @Size(max = 30, message = "Imię jest za długie")
     private String name;
     private String surname;
+    @Email
     private String email;
+    @Size(min = 7)
     private String password;
     @Transient
     private String repeatPassword;

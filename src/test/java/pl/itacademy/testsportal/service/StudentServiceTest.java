@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.itacademy.testsportal.dao.StudentSpringDataDao;
+import pl.itacademy.testsportal.dao.StudentRepository;
 import pl.itacademy.testsportal.model.Student;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,7 +20,7 @@ public class StudentServiceTest {
     private TestEntityManager entityManager;
 
     @Autowired
-    StudentSpringDataDao repository;
+    StudentRepository repository;
 
     StudentService studentService;
 
