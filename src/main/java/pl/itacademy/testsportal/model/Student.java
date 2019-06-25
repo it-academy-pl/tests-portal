@@ -1,5 +1,8 @@
 package pl.itacademy.testsportal.model;
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @NamedQueries({
@@ -13,6 +16,7 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Size(min = 5, max = 20, message="invalid size123")
     private String name;
     private String surname;
     private String email;

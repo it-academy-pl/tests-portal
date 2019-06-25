@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import pl.itacademy.testsportal.model.Student;
 import pl.itacademy.testsportal.service.StudentService;
 import pl.itacademy.testsportal.validate.StudentValidator;
@@ -48,7 +49,7 @@ public class StudentController {
     }
 
     @PostMapping("/student")
-    public String studentSubmit(@ModelAttribute Student student, BindingResult bindingResult) {
+    public String studentSubmit(@ModelAttribute @Valid Student student, BindingResult bindingResult) {
         new StudentValidator().validate(student, bindingResult);
         if (bindingResult.hasErrors()) {
             return "studentForm";
