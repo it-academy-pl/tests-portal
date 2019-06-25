@@ -1,16 +1,19 @@
 package pl.itacademy.testsportal.model;
+import pl.itacademy.testsportal.validate.FieldMatch;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity(name = "Student")
 @Table(name = "STUDENT")
+@FieldMatch(first = "password", second = "repeatPassword", message = "Passwords are not equal.")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Size(min = 2, message = "Imię jest za Krótkie")
+    @Size(min = 2, message = "Imię jest za krótkie")
     @Size(max = 10, message = "Imię jest za długie")
     private String name;
     private String surname;
