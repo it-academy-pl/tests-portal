@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface StudentSpringDataDao extends JpaRepository<Student, Long> {
 
-    @Query("Select s from STUDENT s where name = :name")
+    @Query("Select s from Student s where name = :name")
     Optional<Student> findByName(@Param("name") String name);
 }
