@@ -48,6 +48,7 @@ public class StudentController {
         if (bindingResult.hasErrors()) {
             return "studentForm";
         }
+
         studentService.addStudent(student);
         return "result";
     }

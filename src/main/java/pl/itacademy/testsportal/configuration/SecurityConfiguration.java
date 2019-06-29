@@ -1,6 +1,7 @@
 package pl.itacademy.testsportal.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.servlet.annotation.WebServlet;
 import javax.sql.DataSource;
 
 @Configuration
@@ -22,9 +24,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select email, password, true from STUDENTS where email=?")
+                .usersByUsernameQuery("select email, password, true from STUDENT where email=?")
                 .passwordEncoder(passwordEncoder())
-                .authoritiesByUsernameQuery("select email, 'ROLE_USER' from STUDENTS where email=?");
+                .authoritiesByUsernameQuery("select email, 'ROLE_USER' from STUDENT where email=?");
     }
 
 
@@ -34,11 +36,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login*").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().and().headers().frameOptions().disable();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 }

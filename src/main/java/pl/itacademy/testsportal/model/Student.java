@@ -20,7 +20,7 @@ public class Student {
     private String surname;
     @Email
     private String email;
-    @Size(min = 7)
+    @Size(min = 7, message = "za krótkie hasło")
     private String password;
     @Transient
     private String repeatPassword;
