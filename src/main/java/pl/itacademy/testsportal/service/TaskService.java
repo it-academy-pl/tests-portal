@@ -9,14 +9,14 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class TaskService {
-    private TaskRepository taskDao;
+    private TaskRepository taskRepository;
 
-    public TaskService(TaskRepository taskDao) {
-        this.taskDao = taskDao;
+    public TaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
     }
 
     public void saveTask(Task task) {
-        taskDao.save(task);
+        taskRepository.save(task);
     }
 
 }

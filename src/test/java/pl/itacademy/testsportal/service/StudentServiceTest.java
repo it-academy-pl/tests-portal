@@ -3,9 +3,11 @@ package pl.itacademy.testsportal.service;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.itacademy.testsportal.dao.StudentRepository;
 import pl.itacademy.testsportal.model.Student;
@@ -23,10 +25,11 @@ public class StudentServiceTest {
     StudentRepository repository;
 
     StudentService studentService;
-
+    @Mock
+    PasswordEncoder passwordEncoder;
     @Before
     public void setUp() {
-        studentService = new StudentService(repository);
+        studentService = new StudentService(repository, passwordEncoder);
     }
 
     @Test

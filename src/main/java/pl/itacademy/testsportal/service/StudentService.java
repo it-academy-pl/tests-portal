@@ -1,5 +1,7 @@
 package pl.itacademy.testsportal.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.itacademy.testsportal.dao.StudentRepository;
@@ -11,20 +13,28 @@ import java.util.List;
 @Transactional
 public class StudentService {
 
-    private StudentRepository studentDao;
+    private PasswordEncoder bCryptPasswordEncoder;
+    private StudentRepository studentRepository;
 
-    public StudentService(StudentRepository studentDao) {
-        this.studentDao = studentDao;
+    @Autowired
+    public StudentService(StudentRepository studentRepository,
+                          PasswordEncoder bCryptPasswordEncoder) {
+        this.studentRepository = studentRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public List<Student> getAllStudents() {
-        return studentDao.findAll();
+        return studentRepository.findAll();
     }
 
     public void addStudent(Student student) {
-        studentDao.save(student);
+        String hashedPassword = bCryptPasswordEncoder.encode(student.getPassword());
+        student.setPassword(hashedPassword);
+        student.setRepeatPassword(hashedPassword);
+
+        studentRepository.save(student);
     }
-    public Student getStudent(Student student) {return student;}
-    public Student getByName(String name) { return studentDao.findByName(name); }
+
+    public Student getByName(String name) { return studentRepository.findByName(name); }
 
 }
