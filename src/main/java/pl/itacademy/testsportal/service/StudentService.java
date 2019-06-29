@@ -2,10 +2,8 @@ package pl.itacademy.testsportal.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.itacademy.testsportal.dao.StudentDao;
-import pl.itacademy.testsportal.dao.StudentSpringDataDao;
+import pl.itacademy.testsportal.dao.StudentRepository;
 import pl.itacademy.testsportal.model.Student;
-import pl.itacademy.testsportal.model.Task;
 
 import java.util.List;
 
@@ -13,9 +11,9 @@ import java.util.List;
 @Transactional
 public class StudentService {
 
-    private StudentSpringDataDao studentDao;
+    private StudentRepository studentDao;
 
-    public StudentService(StudentSpringDataDao studentDao) {
+    public StudentService(StudentRepository studentDao) {
         this.studentDao = studentDao;
     }
 

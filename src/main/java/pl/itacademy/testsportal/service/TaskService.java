@@ -1,7 +1,7 @@
 package pl.itacademy.testsportal.service;
 
 import org.springframework.stereotype.Service;
-import pl.itacademy.testsportal.dao.TaskDao;
+import pl.itacademy.testsportal.dao.TaskRepository;
 import pl.itacademy.testsportal.model.Task;
 
 import javax.transaction.Transactional;
@@ -9,9 +9,9 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class TaskService {
-    private TaskDao taskDao;
+    private TaskRepository taskDao;
 
-    public TaskService(TaskDao taskDao) {
+    public TaskService(TaskRepository taskDao) {
         this.taskDao = taskDao;
     }
 

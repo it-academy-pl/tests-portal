@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Profile("springdata")
 @Repository
-public interface StudentSpringDataDao extends JpaRepository<Student, Long> {
+public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query("Select s from STUDENT s where name = :name")
     Student findByName(@Param("name") String name);
 }
