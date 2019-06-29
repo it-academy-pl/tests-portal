@@ -2,11 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
+<a href="addStudent">Add student</a>
+<br/>
+<a href="students">All Students</a>
+<br/>
+<a href="task">Task demo</a>
+
 <div sec:authorize="isAuthenticated()">
     This content is only shown to authenticated users.
 </div>
-<a href="student">add student</a>
-<br/>
-<a href="students">All Students</a>
 </body>
 </html>

@@ -2,24 +2,18 @@ package pl.itacademy.testsportal.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import pl.itacademy.testsportal.model.Student;
 import pl.itacademy.testsportal.service.StudentService;
-import pl.itacademy.testsportal.validate.StudentValidator;
 
-import javax.persistence.GeneratedValue;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -31,6 +25,7 @@ public class StudentController {
 
     private StudentService studentService;
 
+    @Autowired
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
@@ -42,20 +37,24 @@ public class StudentController {
         return new ModelAndView("/students.html", "students", students);
     }
 
-    @GetMapping("/student")
+    @GetMapping("/addStudent")
     public String studentForm(Model model) {
         model.addAttribute("student", new Student());
         return "studentForm";
     }
 
-    @PostMapping("/student")
+    @PostMapping("/addStudent")
     public String studentSubmit(@ModelAttribute @Valid Student student, BindingResult bindingResult) {
-        new StudentValidator().validate(student, bindingResult);
         if (bindingResult.hasErrors()) {
             return "studentForm";
         }
+
         studentService.addStudent(student);
         return "result";
     }
 
+    @GetMapping("/task")
+    public String getTask() {
+        return "task";
+    }
 }
