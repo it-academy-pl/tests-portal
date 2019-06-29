@@ -17,15 +17,15 @@ import java.util.List;
 
 @Controller
 @Transactional
-public class TaskControllers {
+public class TaskController {
 
     private static Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     private StudentService studentService;
     private TaskService taskService;
 
-    public TaskControllers(StudentService studentService,
-    TaskService taskService) {
+    public TaskController(StudentService studentService,
+                          TaskService taskService) {
         this.studentService = studentService;
         this.taskService = taskService;
     }
