@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity(name = "Student")
 @Table(name = "STUDENT")
-@FieldMatch(first = "password", second = "repeatPassword", message = "Passwords are not equal.")
+@FieldMatch(first = "password", second = "repeatPassword", message = "Hasła muszą być takie same")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
