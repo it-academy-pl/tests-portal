@@ -1,4 +1,5 @@
 package pl.itacademy.testsportal.model;
+import org.hibernate.annotations.Cascade;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class Student {
     private String repeatPassword;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "student")
+    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     private List<Task> tasks;
 
     public Student() {

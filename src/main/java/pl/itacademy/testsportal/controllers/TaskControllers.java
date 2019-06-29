@@ -24,9 +24,12 @@ public class TaskControllers {
 
     private static Logger logger = LoggerFactory.getLogger(StudentController.class);
     private StudentService studentService;
+    private TaskService taskService;
 
-    public TaskControllers(StudentService studentService) {
+    public TaskControllers(StudentService studentService,
+    TaskService taskService) {
         this.studentService = studentService;
+        this.taskService = taskService;
     }
 
     @GetMapping("/task")
@@ -47,11 +50,12 @@ public class TaskControllers {
         Student student = studentService.getByName(task.getStudentName());
         List<Task> tasks = student.getTasks();
         tasks.add(task);
-        student.setTasks(tasks);
+        task.setStudent(student);
+
         for(Task ts:student.getTasks()){
             System.out.println(ts.getDescription());
         }
-        studentService.addStudent(student);
+        taskService.saveTask(task);
         return "resultTask";
     }
 }
