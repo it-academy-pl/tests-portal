@@ -1,26 +1,31 @@
 package pl.itacademy.testsportal.model;
+
 import pl.itacademy.testsportal.validate.FieldMatch;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity(name = "Student")
 @Table(name = "STUDENT")
-@FieldMatch(first = "password", second = "repeatPassword", message = "Passwords are not equal.")
+@FieldMatch(first = "password", second = "repeatPassword", message = "Hasła muszą być takie same")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
     @Size(min = 2, message = "Imię jest za krótkie")
     @Size(max = 30, message = "Imię jest za długie")
     private String name;
     private String surname;
     @Email
     private String email;
-    @Size(min = 7)
+    @Size(min = 7, message = "za krótkie hasło")
     private String password;
     @Transient
     private String repeatPassword;
