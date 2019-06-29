@@ -17,6 +17,7 @@ import pl.itacademy.testsportal.service.StudentService;
 import javax.validation.Valid;
 import java.util.List;
 
+
 @Controller
 @Transactional
 public class StudentController {
@@ -53,8 +54,4 @@ public class StudentController {
         return "result";
     }
 
-    @GetMapping("/task")
-    public String getTask() {
-        return "task";
-    }
 }

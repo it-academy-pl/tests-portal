@@ -40,6 +40,6 @@ public class StudentServiceTest {
 
     @Test
     public void testGetStudentByName() {
-        assertThat(studentService.getByName("Staszek").get().getEmail()).isEqualTo("rubel@coin.ru");
+        assertThat(studentService.getByName("Staszek").getEmail()).isEqualTo("rubel@coin.ru");
     }
 }

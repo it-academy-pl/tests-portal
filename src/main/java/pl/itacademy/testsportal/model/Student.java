@@ -6,11 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
+
 
 @Entity(name = "Student")
 @Table(name = "STUDENT")
@@ -30,6 +33,9 @@ public class Student {
     @Transient
     private String repeatPassword;
     private Date lastLogin;
+
+    @OneToMany(mappedBy = "student")
+    private List<Task> tasks;
 
     public Student() {
     }
@@ -71,6 +77,14 @@ public class Student {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     public String getRepeatPassword() {
