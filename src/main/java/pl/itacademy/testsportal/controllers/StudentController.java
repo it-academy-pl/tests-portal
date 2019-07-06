@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jackson.JsonComponent;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -12,15 +14,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 import pl.itacademy.testsportal.model.Student;
 import pl.itacademy.testsportal.service.StudentService;
 
-import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 
@@ -48,14 +49,21 @@ public class StudentController {
 
     @GetMapping("/students/{id}")
     @ResponseBody
-    public Student getStudentById(@PathVariable("id") long id) {
+    public Student getStudentById(@PathVariable("id") long id, @RequestHeader("User-Agent") String userAgent) {
+        System.out.println("user is using as a rest client " + userAgent);
         return studentService.getById(id).get();
     }
 
     @GetMapping("/students")
     @ResponseBody
-    public List<Student> getStudentByName(@RequestParam(name = "name") String name) {
-        return studentService.getByName(name);
+    public ResponseEntity<List<Student>> getStudentByName(@RequestParam(name = "name") String name) {
+
+        if(studentService.getByName(name).isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(studentService.getByName(name), HttpStatus.OK);
+        }
+
     }
 
     @GetMapping("/addStudent")
@@ -64,14 +72,10 @@ public class StudentController {
         return "studentForm";
     }
 
-    @PostMapping("/addStudent")
-    public String studentSubmit(@ModelAttribute @Valid Student student, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "studentForm";
-        }
-
+    @PostMapping("/students")
+    public ResponseEntity<Void> studentSubmit(@RequestBody Student student) {
         studentService.addStudent(student);
-        return "result";
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }
