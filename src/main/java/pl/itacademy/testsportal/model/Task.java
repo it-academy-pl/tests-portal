@@ -13,6 +13,7 @@ public class Task {
     private String description;
     private String subject;
     private int difficulty;
+    private String formula;
 
     @Transient
     private String studentName;

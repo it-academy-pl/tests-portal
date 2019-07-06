@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 import pl.itacademy.testsportal.model.Student;
 import pl.itacademy.testsportal.model.Task;
 import pl.itacademy.testsportal.service.StudentService;
@@ -31,15 +32,16 @@ public class TaskController {
     }
 
     @GetMapping("/task")
-    public String taskForm(Model model) {
+    public ModelAndView taskForm(Model model) {
         logger.debug("new task");
+        List<Student> students = studentService.getAllStudents();
         model.addAttribute("task", new Task());
-        return "taskForm";
+        return new ModelAndView("taskForm", "students", students);
     }
 
     @PostMapping("/task")
     public String studentSubmit(@ModelAttribute Task task) {
-        Student student = studentService.getByName(task.getStudentName());
+        Student student = studentService.getByName(task.getStudentName()).get(0);
         List<Task> tasks = student.getTasks();
         tasks.add(task);
         task.setStudent(student);

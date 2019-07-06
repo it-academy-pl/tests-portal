@@ -1,5 +1,7 @@
 package pl.itacademy.testsportal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.boot.jackson.JsonComponent;
 import pl.itacademy.testsportal.validate.FieldMatch;
 
 import javax.persistence.Entity;
@@ -18,6 +20,7 @@ import java.util.List;
 @Entity(name = "Student")
 @Table(name = "STUDENT")
 @FieldMatch(first = "password", second = "repeatPassword", message = "Hasła muszą być takie same")
+@JsonComponent
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,12 +32,15 @@ public class Student {
     @Email
     private String email;
     @Size(min = 7, message = "za krótkie hasło")
+    @JsonIgnore
     private String password;
     @Transient
+    @JsonIgnore
     private String repeatPassword;
     private Date lastLogin;
 
     @OneToMany(mappedBy = "student")
+    @JsonIgnore
     private List<Task> tasks;
 
     public Student() {

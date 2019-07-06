@@ -29,7 +29,7 @@ public class StudentServiceTest {
     PasswordEncoder passwordEncoder;
     @Before
     public void setUp() {
-        studentService = new StudentService(repository, passwordEncoder);
+        studentService = new StudentService(repository);
     }
 
     @Test
