@@ -10,7 +10,13 @@
     <p>Description: <input type="text" th:field="*{description}" /></p>
     <p>Subject: <input type="text" th:field="*{subject}" /></p>
     <p>Difficulty: <input type="text" th:field="*{difficulty}" /></p>
-    <p>Student name: <input type="text" th:field="*{studentName}" /></p>
+    <select>
+        <option value="apple">Apple</option>
+        <option value="banana">Banana</option>
+        <option value="orange">Orange</option>
+        <option value="pear">Pear</option>
+    </select>
+<p>Student name: <input type="text" th:field="*{studentName}" /></p>
     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>
 </body>

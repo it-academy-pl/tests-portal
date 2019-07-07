@@ -2,14 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
 <a href="addStudent">Add student</a>
 <br/>
 <a href="students">All Students</a>
 <br/>
+    This content is only shown to admins.
+</div>
 <a href="task">Task demo</a>
-
+<a href="logout">Logout</a>
 <div sec:authorize="isAuthenticated()">
-    This content is only shown to authenticated users.
+
 </div>
 </body>
 </html>
