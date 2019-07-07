@@ -2,13 +2,7 @@ package pl.itacademy.testsportal.model;
 
 import pl.itacademy.testsportal.validate.FieldMatch;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -36,6 +30,9 @@ public class Student {
 
     @OneToMany(mappedBy = "student")
     private List<Task> tasks;
+
+    @ManyToOne
+    private Group group;
 
     public Student() {
     }
