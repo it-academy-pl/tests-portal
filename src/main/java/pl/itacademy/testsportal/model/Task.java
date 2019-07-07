@@ -18,6 +18,7 @@ public class Task {
     private String studentName;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "student_id")
     private Student student;
 
 
