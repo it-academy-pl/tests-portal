@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import pl.itacademy.testsportal.model.Group;
 import pl.itacademy.testsportal.model.Student;
+import pl.itacademy.testsportal.service.GroupService;
 import pl.itacademy.testsportal.service.StudentService;
 
 import javax.validation.Valid;
@@ -29,10 +31,12 @@ public class StudentController {
     private static Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     private StudentService studentService;
+    private GroupService groupService;
 
     @Autowired
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, GroupService groupService) {
         this.studentService = studentService;
+        this.groupService = groupService;
     }
 
     @GetMapping("/students")
@@ -63,16 +67,30 @@ public class StudentController {
         logger.info("Oppening file");
         Student student = new Student();
         try {
-//            Workbook wb = new HSSFWorkbook(new FileInputStream("/Users/sebastianpakula/Dropbox/Java/tests-portal/src/main/resources/external_files/uzupelnianieOcen_Mechanika 1_Cwiczenia audytoryjne_GA07.xls"));
-            Workbook wb = new HSSFWorkbook(new FileInputStream("/Users/sebastianpakula/Dropbox/Java/tests-portal/src/main/resources/external_files/przyklad.xls"));
+            Workbook wb = new HSSFWorkbook(new FileInputStream("/Users/sebastianpakula/Dropbox/Java/tests-portal/src/main/resources/external_files/uzupelnianieOcen_Mechanika 1_Cwiczenia audytoryjne_GA07.xls"));
+//            Workbook wb = new HSSFWorkbook(new FileInputStream("/Users/sebastianpakula/Dropbox/Java/tests-portal/src/main/resources/external_files/przyklad.xls"));
             Sheet sheet = wb.getSheetAt(0);
             Row row;
+            Group group;
             Cell cell;
             String name;
             String surname;
             long index;
+            logger.info("Getting group name and subject name from file");
+            String groupName = sheet.getRow(13).getCell(2).getStringCellValue();
+            String subjectName = sheet.getRow(10).getCell(2).getStringCellValue();
 
-            for (int i = 18; i < sheet.getLastRowNum(); i++) {
+            logger.info("Group is: "+groupName+ " and subject is: "+ subjectName);
+            logger.info("Checking if group "+groupName+ " exists in database");
+                group = groupService.getByName(groupName);
+            if(group==null){
+                logger.info("Group "+groupName+ " doesn't exist in database");
+                group = new Group(groupName, subjectName);
+                System.out.println(group);
+                groupService.addGroup(group);
+            }else{logger.info("Group "+groupName+ " exists in database!");}
+
+            for (int i = 17; i < sheet.getLastRowNum(); i++) {
                 row = sheet.getRow(i);
                 String[] names = row.getCell(1).getStringCellValue().split(" ");
                 student.setName(names[0]);
@@ -85,8 +103,9 @@ public class StudentController {
                 student.setEmail("");
                 student.setPassword(String.valueOf(student.getIndex()));
                 student.setRepeatPassword(student.getPassword());
+                student.setGroup(group);
 
-                logger.info("Adding student: " + student+ " Password: "+student.getPassword() + ":" + student.getRepeatPassword());
+                logger.info("Adding student: " + student+ " Password: "+student.getPassword() + "("+student.getGroup()+")"+":" + student.getRepeatPassword());
                 studentService.addStudent(student);
             }
             logger.info("Closing file.");

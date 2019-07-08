@@ -1,10 +1,12 @@
 package pl.itacademy.testsportal.model;
 
 
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "Group")
+@Entity(name = "GROUPS")
 @Table(name="GROUPS")
 public class Group {
     @Id
@@ -19,10 +21,9 @@ public class Group {
     public Group() {
     }
 
-    public Group(String name, String subject, List<Student> students) {
+    public Group(String name, String subject) {
         this.name = name;
         this.subject = subject;
-        this.students = students;
     }
 
     public long getId() {
@@ -55,5 +56,14 @@ public class Group {
 
     public void setStudents(List<Student> students) {
         this.students = students;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", subject='" + subject + '\'' +
+                '}';
     }
 }

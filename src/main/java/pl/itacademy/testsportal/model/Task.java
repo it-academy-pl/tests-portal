@@ -1,7 +1,6 @@
 package pl.itacademy.testsportal.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name="TASK")
@@ -11,7 +10,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String description;
-    private String subject;
+    private String type;
     private int difficulty;
 
     @Transient
@@ -25,10 +24,10 @@ public class Task {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "task")
     private List<Parameter> parameters;
 
-    public Task(String description,  String subject, int difficulty, Student student) {
+    public Task(String description, String type, int difficulty, Student student) {
         this.description = description;
         this.difficulty = difficulty;
-        this.subject = subject;
+        this.type = type;
         this.student = student;
     }
 
@@ -55,12 +54,12 @@ public class Task {
         this.difficulty = difficulty;
     }
 
-    public String getSubject() {
-        return subject;
+    public String getType() {
+        return type;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Student getStudent() {
