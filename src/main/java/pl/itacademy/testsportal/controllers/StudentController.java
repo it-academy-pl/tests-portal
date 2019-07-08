@@ -21,6 +21,7 @@ import pl.itacademy.testsportal.service.StudentService;
 import javax.validation.Valid;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -65,15 +66,14 @@ public class StudentController {
     @GetMapping("/addStudentFromFile")
     public ModelAndView addStudentsFromFile() {
         logger.info("Oppening file");
-        Student student = new Student();
+
         try {
-            Workbook wb = new HSSFWorkbook(new FileInputStream("/Users/sebastianpakula/Dropbox/Java/tests-portal/src/main/resources/external_files/uzupelnianieOcen_Mechanika 1_Cwiczenia audytoryjne_GA07.xls"));
-//            Workbook wb = new HSSFWorkbook(new FileInputStream("/Users/sebastianpakula/Dropbox/Java/tests-portal/src/main/resources/external_files/przyklad.xls"));
+//            Workbook wb = new HSSFWorkbook(new FileInputStream("/Users/sebastianpakula/Dropbox/Java/tests-portal/src/main/resources/external_files/uzupelnianieOcen_Mechanika 1_Cwiczenia audytoryjne_GA07.xls"));
+            Workbook wb = new HSSFWorkbook(new FileInputStream("/Users/sebastianpakula/Dropbox/Java/tests-portal/src/main/resources/external_files/przyklad.xls"));
             Sheet sheet = wb.getSheetAt(0);
             Row row;
             Group group;
             Cell cell;
-            String name;
             String surname;
             long index;
             logger.info("Getting group name and subject name from file");
@@ -89,12 +89,18 @@ public class StudentController {
                 System.out.println(group);
                 groupService.addGroup(group);
             }else{logger.info("Group "+groupName+ " exists in database!");}
-
+            Student student = new Student();
             for (int i = 17; i < sheet.getLastRowNum(); i++) {
+
                 row = sheet.getRow(i);
                 String[] names = row.getCell(1).getStringCellValue().split(" ");
-                student.setName(names[0]);
-                student.setSurname(names[1]);
+                String name = names[1];
+                // if name has more than 1 word
+                for (int k = 2; k < names.length; k++) { // if name has more than 1 word
+                    name = name + " " + names[k];
+                }
+                student.setName(name);
+                student.setSurname(names[0]);
                 if (row.getCell(2).getCellType() == CellType.STRING) {
                     student.setIndex(Long.parseLong(row.getCell(2).getStringCellValue()));
                 } else if (row.getCell(2).getCellType() == CellType.NUMERIC) {
