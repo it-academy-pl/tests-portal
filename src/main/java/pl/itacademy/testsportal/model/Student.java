@@ -2,13 +2,7 @@ package pl.itacademy.testsportal.model;
 
 import pl.itacademy.testsportal.validate.FieldMatch;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -17,11 +11,10 @@ import java.util.List;
 
 @Entity(name = "Student")
 @Table(name = "STUDENT")
-@FieldMatch(first = "password", second = "repeatPassword", message = "Hasła muszą być takie same")
+//@FieldMatch(first = "password", second = "repeatPassword", message = "Hasła muszą być takie same")
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long index;
     @Size(min = 2, message = "Imię jest za krótkie")
     @Size(max = 30, message = "Imię jest za długie")
     private String name;
@@ -30,21 +23,36 @@ public class Student {
     private String email;
     @Size(min = 7, message = "za krótkie hasło")
     private String password;
+
     @Transient
     private String repeatPassword;
     private Date lastLogin;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany
     private List<Task> tasks;
+
+
+    @ManyToOne
+    @JoinColumn(name="group_id")
+    private Group group;
+
 
     public Student() {
     }
 
-    public Student(String name, String surname, String email, String password) {
+    public Student(long index, String name, String surname, String email, String password) {
+        this.index = index;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.password = password;
+    }
+    public long getIndex() {
+        return index;
+    }
+
+    public void setIndex(long index) {
+        this.index = index;
     }
 
     public String getName() {
@@ -94,5 +102,21 @@ public class Student {
     public void setRepeatPassword(String repeatPassword) {
         this.repeatPassword = repeatPassword;
     }
+    public Group getGroup() {
+        return group;
+    }
 
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "index=" + index +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
