@@ -29,6 +29,7 @@ import java.util.List;
 @Transactional
 public class StudentController {
 
+    public static final int ROW_START_NUMBER = 17;
     private static Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     private StudentService studentService;
@@ -80,17 +81,18 @@ public class StudentController {
             String groupName = sheet.getRow(13).getCell(2).getStringCellValue();
             String subjectName = sheet.getRow(10).getCell(2).getStringCellValue();
 
-            logger.info("Group is: "+groupName+ " and subject is: "+ subjectName);
-            logger.info("Checking if group "+groupName+ " exists in database");
-                group = groupService.getByName(groupName);
-            if(group==null){
-                logger.info("Group "+groupName+ " doesn't exist in database");
+            logger.info("Group is: " + groupName + " and subject is: " + subjectName);
+            logger.debug("Checking if group " + groupName + " exists in database");
+            group = groupService.getByName(groupName);
+            if (group == null) {
+                logger.info("Group " + groupName + " doesn't exist in database");
                 group = new Group(groupName, subjectName);
-                System.out.println(group);
                 groupService.addGroup(group);
-            }else{logger.info("Group "+groupName+ " exists in database!");}
+            } else {
+                logger.info("Group " + groupName + " exists in database!");
+            }
             Student student = new Student();
-            for (int i = 17; i < sheet.getLastRowNum(); i++) {
+            for (int i = ROW_START_NUMBER; i < sheet.getLastRowNum(); i++) {
 
                 row = sheet.getRow(i);
                 String[] names = row.getCell(1).getStringCellValue().split(" ");
@@ -104,14 +106,14 @@ public class StudentController {
                 if (row.getCell(2).getCellType() == CellType.STRING) {
                     student.setIndex(Long.parseLong(row.getCell(2).getStringCellValue()));
                 } else if (row.getCell(2).getCellType() == CellType.NUMERIC) {
-                    student.setIndex((long)row.getCell(2).getNumericCellValue());
+                    student.setIndex((long) row.getCell(2).getNumericCellValue());
                 }
                 student.setEmail("");
                 student.setPassword(String.valueOf(student.getIndex()));
                 student.setRepeatPassword(student.getPassword());
                 student.setGroup(group);
 
-                logger.info("Adding student: " + student+ " Password: "+student.getPassword() + "("+student.getGroup()+")"+":" + student.getRepeatPassword());
+                logger.info("Adding student: " + student + " Password: " + student.getPassword() + "(" + student.getGroup() + ")" + ":" + student.getRepeatPassword());
                 studentService.addStudent(student);
             }
             logger.info("Closing file.");
