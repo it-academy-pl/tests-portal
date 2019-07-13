@@ -24,7 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .usersByUsernameQuery("select email, password, true from USERS where email=?")
-                .authoritiesByUsernameQuery("select email, 'ROLE_USER' from USERS where email=?")
+                .authoritiesByUsernameQuery("select email, role from USERS where email=?")
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder());
     }
@@ -36,6 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login*").permitAll()
+                .antMatchers("/addStudent", "/students").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().and().headers().frameOptions().disable();

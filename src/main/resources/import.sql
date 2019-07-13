@@ -1,3 +1,4 @@
+--https://www.browserling.com/tools/bcrypt - use it to generate BCrypt hashes
 INSERT INTO GROUPS (id,name,subject) values (100,'G02','Statyka');
 INSERT INTO STUDENT (index,email, name, surname, password,group_id) values (100, 'admin', 'Staszek', 'Rubel', '$2a$10$v0kjaRjDUS/GWtEFLXAmieC/WDVipcO58WQ6wkvfn0QGleyHHfv36',100);
 INSERT INTO STUDENT (index,email,name,surname,password,group_id) values (101,'radek@onet.pl','Radek','Dzięcioł','password',100);
