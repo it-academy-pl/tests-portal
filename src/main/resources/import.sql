@@ -7,4 +7,4 @@ INSERT INTO TASK (id,description,type,difficulty,student_id) values (100,'Oblicz
 INSERT INTO PARAMETER (id,name,value,unit,TASK_ID) values (100,'a',90,'mm',100);
 INSERT INTO PARAMETER (id,name,value,unit,TASK_ID) values (200,'b',30,'mm',100);
 INSERT INTO ADMIN (id,email,password) values (100,'admin','$2a$10$nLyxmsXDEwlRQSZOEManGeX1q.z/dh1wPDHbVkodFuMcmKeYSH5QS');
-CREATE OR REPLACE VIEW USERS AS SELECT email, password from STUDENT UNION ALL select email, password from ADMIN;
+CREATE OR REPLACE VIEW USERS AS SELECT email, password, 'ROLE_USER' as role from STUDENT UNION ALL select email, password, 'ROLE_ADMIN' as role from ADMIN;
